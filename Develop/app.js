@@ -7,7 +7,7 @@ let Intern = require("./lib/Intern.js");
 let Engineer = require("./lib/Engineer.js");
 
 const team = [];
-let cards;
+let cards = "";
 let main = fs.readFileSync('./templates/main.html', 'utf8');
 
 inquirer
@@ -20,8 +20,6 @@ inquirer
         console.log(input.teamsize);
         enterEmployeeData();
     })
-
-
 
 function enterEmployeeData() {
     inquirer
@@ -90,7 +88,7 @@ function enterEmployeeData() {
                 }
 
                 if (employee.role === "Intern") {
-                    var newIntern = new Manager(employee.name, employee.id, employee.email, employee.role, employee.school);
+                    var newIntern = new Intern(employee.name, employee.id, employee.email, employee.role, employee.school);
                     team.push(newIntern);
                     console.log("It's another intern!");
                     console.log(team);
@@ -118,16 +116,16 @@ function toHTMLEmployee(employee) {
         engieHTML = engieHTML.replace(`{{employee-github}}`, employee.getGithub());
         return engieHTML;
     }
-    else if (employee.getRole() === "Manager") {
-        var managerHTML = fs.readFileSync("./templates/engineer.html", "utf8");
+    if (employee.getRole() === "Manager") {
+        var managerHTML = fs.readFileSync("./templates/manager.html", "utf8");
         managerHTML = managerHTML.replace(`{{employee-name}}`, employee.getName());
         managerHTML = managerHTML.replace(`{{employee-id}}`, employee.getId());
         managerHTML = managerHTML.replace(`{{employee-email}}`, employee.getEmail());
         managerHTML = managerHTML.replace(`{{employee-office-no}}`, employee.getOfficeNumber());
         return managerHTML;
     }
-    else if (employee.getRole() === "Intern") {
-        var internHTML = fs.readFileSync("./templates/engineer.html", "utf8");
+    if (employee.getRole() === "Intern") {
+        var internHTML = fs.readFileSync("./templates/intern.html", "utf8");
         internHTML = internHTML.replace(`{{employee-name}}`, employee.getName());
         internHTML = internHTML.replace(`{{employee-id}}`, employee.getId());
         internHTML = internHTML.replace(`{{employee-email}}`, employee.getEmail());
