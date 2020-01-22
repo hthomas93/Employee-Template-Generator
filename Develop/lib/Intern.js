@@ -12,7 +12,3 @@ class Intern extends Employee {
 }
 
 module.exports = Intern;
-// Intern
-// school
-// getSchool()
-// getRole() // Overridden to return 'Intern'

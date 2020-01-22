@@ -6,8 +6,9 @@ let Manager = require("./lib/Manager.js");
 let Intern = require("./lib/Intern.js");
 let Engineer = require("./lib/Engineer.js");
 
-let teamSize;
 const team = [];
+let cards;
+let main = fs.readFileSync('./templates/main.html', 'utf8');
 
 inquirer
     .prompt([{
@@ -76,6 +77,7 @@ function enterEmployeeData() {
                     team.push(newEngie);
                     console.log("It's an engineer");
                     console.log(team)
+                    cards += toHTMLEmployee(newEngie);
                 }
 
                 if (employee.role === "Manager") {
@@ -83,6 +85,8 @@ function enterEmployeeData() {
                     team.push(newManager);
                     console.log("It's a manager!");
                     console.log(team);
+                    cards += toHTMLEmployee(newManager);
+
                 }
 
                 if (employee.role === "Intern") {
@@ -90,18 +94,13 @@ function enterEmployeeData() {
                     team.push(newIntern);
                     console.log("It's another intern!");
                     console.log(team);
+                    cards += toHTMLEmployee(newIntern);
                 }
-                // If the response role is an engineer
-                // Read the Engineer html template
-                // Replace the Engineer name
-                // Replace the Engineer title
-                // Replace the Engineer id
-                // Replace the Engineer email address
-                // Replace the Engineer github username
-                // If the response role is a manager
-                // If the response role is an intern
                 teamsize--;
                 if (teamsize === 0) {
+                    // Render the team as cards in the main html
+                    main = main.replace('{{cards}}', cards);
+                    fs.writeFileSync('./output/team.html', main);
                     return;
                 } else {
                     enterEmployeeData();
@@ -110,14 +109,30 @@ function enterEmployeeData() {
 
 }
 
-// function toHTMLEmployee(employee) {
-//     if (employee.getRole() === "Engineer") {
-//         var engieHTML = fs.readFileSync("./templates/engineer.html", "utf8");
-//         engieHTML = engieHTML.replace(`{{employee-name}}`, newEngie.getName());
-//         engieHTML = engieHTML.replace(`{{employee-id}}`, newEngie.getId());
-//         engieHTML = engieHTML.replace(`{{employee-email}}`, newEngie.getEmail());
-//         engieHTML = engieHTML.replace(`{{employee-github}}`, newEngie.getGithub());
-//         return engieHTML;
-//     }
-// }
+function toHTMLEmployee(employee) {
+    if (employee.getRole() === "Engineer") {
+        var engieHTML = fs.readFileSync("./templates/engineer.html", "utf8");
+        engieHTML = engieHTML.replace(`{{employee-name}}`, employee.getName());
+        engieHTML = engieHTML.replace(`{{employee-id}}`, employee.getId());
+        engieHTML = engieHTML.replace(`{{employee-email}}`, employee.getEmail());
+        engieHTML = engieHTML.replace(`{{employee-github}}`, employee.getGithub());
+        return engieHTML;
+    }
+    else if (employee.getRole() === "Manager") {
+        var managerHTML = fs.readFileSync("./templates/engineer.html", "utf8");
+        managerHTML = managerHTML.replace(`{{employee-name}}`, employee.getName());
+        managerHTML = managerHTML.replace(`{{employee-id}}`, employee.getId());
+        managerHTML = managerHTML.replace(`{{employee-email}}`, employee.getEmail());
+        managerHTML = managerHTML.replace(`{{employee-office-no}}`, employee.getOfficeNumber());
+        return managerHTML;
+    }
+    else if (employee.getRole() === "Intern") {
+        var internHTML = fs.readFileSync("./templates/engineer.html", "utf8");
+        internHTML = internHTML.replace(`{{employee-name}}`, employee.getName());
+        internHTML = internHTML.replace(`{{employee-id}}`, employee.getId());
+        internHTML = internHTML.replace(`{{employee-email}}`, employee.getEmail());
+        internHTML = internHTML.replace(`{{employee-school}}`, employee.getSchool());
+        return internHTML;
+    }
+}
 
