@@ -21,8 +21,3 @@ class Employee {
 }
 
 module.exports = Employee;
-
-// Manager
-// officeNumber
-// getRole() // Overridden to return 'Manager'
-
