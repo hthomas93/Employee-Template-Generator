@@ -71,7 +71,7 @@ function enterEmployeeData() {
         .then(
             function (employee) {
                 if (employee.role === "Engineer") {
-                    var newEngie = new Engineer(employee.name, employee.id, employee.email, employee.role, employee.github);
+                    var newEngie = new Engineer(employee.name, employee.id, employee.email, employee.github);
                     team.push(newEngie);
                     console.log("It's an engineer");
                     console.log(team)
@@ -79,7 +79,7 @@ function enterEmployeeData() {
                 }
 
                 if (employee.role === "Manager") {
-                    var newManager = new Manager(employee.name, employee.id, employee.email, employee.role, employee.officeNo);
+                    var newManager = new Manager(employee.name, employee.id, employee.email, employee.officeNo);
                     team.push(newManager);
                     console.log("It's a manager!");
                     console.log(team);
@@ -88,7 +88,7 @@ function enterEmployeeData() {
                 }
 
                 if (employee.role === "Intern") {
-                    var newIntern = new Intern(employee.name, employee.id, employee.email, employee.role, employee.school);
+                    var newIntern = new Intern(employee.name, employee.id, employee.email, employee.school);
                     team.push(newIntern);
                     console.log("It's another intern!");
                     console.log(team);
